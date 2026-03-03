@@ -14,19 +14,19 @@ class User(models.Model):
     
     user_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=20)
-    cpf = models.CharField(max_length=14, unique=True)
-    birth_date = models.DateField()
+    email = models.EmailField(unique=True, blank=True, null=True)  # ← Opcional
+    phone = models.CharField(max_length=20, blank=True, null=True)  # ← Opcional
+    cpf = models.CharField(max_length=14, unique=True, blank=True, null=True)  # ← Opcional
+    birth_date = models.DateField(blank=True, null=True)  # ← Opcional
     
     # Endereço
-    street = models.CharField(max_length=255)
-    city = models.CharField(max_length=100)
-    state = models.CharField(max_length=2)
-    zipcode = models.CharField(max_length=9)
+    street = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    state = models.CharField(max_length=2, blank=True, null=True)
+    zipcode = models.CharField(max_length=9, blank=True, null=True)
     
     # Outros
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='A')
     profile_photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
     

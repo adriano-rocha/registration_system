@@ -30,9 +30,9 @@
               <td>{{ user.user_id }}</td>
               <td>
                 {% if user.profile_photo %}
-                  <img src="{{ user.profile_photo.url }}" alt="Foto" class="rounded-circle" width="40" height="40">
+                <img src="{{ user.profile_photo.url }}" alt="Foto" class="rounded-circle" width="40" height="40" />
                 {% else %}
-                  <span class="badge bg-secondary">Sem foto</span>
+                <span class="badge bg-secondary">Sem foto</span>
                 {% endif %}
               </td>
               <td>{{ user.name }}</td>
@@ -41,24 +41,27 @@
               <td>{{ user.phone|default:"-" }}</td>
               <td>{{ user.birth_date|date:"d/m/Y" }}</td>
               <td>
-                {% if user.gender == 'M' %}Masculino
-                {% elif user.gender == 'F' %}Feminino
-                {% else %}Outro{% endif %}
+                {% if user.gender == 'M' %}
+                  Masculino
+                {% elif user.gender == 'F' %}
+                  Feminino
+                {% elif user.gender == 'O' %}
+                  Outro
+                {% else %}
+                  -
+                {% endif %}
               </td>
               <td>{{ user.city|default:"-" }}/{{ user.state|default:"-" }}</td>
               <td>
                 {% if user.status == 'A' %}
-                  <span class="badge bg-success">Ativo</span>
+                <span class="badge bg-success">Ativo</span>
                 {% else %}
-                  <span class="badge bg-danger">Inativo</span>
+                <span class="badge bg-danger">Inativo</span>
                 {% endif %}
               </td>
               <td>
-                <a href="{% url 'delete_user' user.user_id %}" 
-                   class="btn btn-danger btn-sm" 
-                   onclick="return confirm('Tem certeza que deseja deletar {{ user.name }}?')">
-                  🗑️ Deletar
-                </a>
+                <a href="{% url 'edit_user' user.user_id %}" class="btn btn-warning btn-sm me-1">✏️ Editar</a>
+                <a href="{% url 'delete_user' user.user_id %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja deletar {{ user.name }}?')">🗑️ Deletar</a>
               </td>
             </tr>
             {% empty %}
@@ -71,11 +74,9 @@
           </tbody>
         </table>
       </div>
-      
+
       <div class="text-center mt-4">
-        <a href="{% url 'home' %}" class="btn btn-primary">
-          ➕ Cadastrar Novo Usuário
-        </a>
+        <a href="{% url 'home' %}" class="btn btn-primary">➕ Cadastrar Novo Usuário</a>
       </div>
     </div>
   </div>

@@ -1,0 +1,139 @@
+{% extends 'users/base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+  <div class="card shadow-lg">
+    <div class="card-header bg-warning text-white text-center">
+      <h2>✏️ Editar Usuário</h2>
+    </div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Informações Pessoais -->
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Nome Completo *</label>
+            <input name="name" class="form-control" type="text" value="{{ user.name }}" required />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email *</label>
+            <input name="email" class="form-control" type="email" value="{{ user.email }}" required />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label">Telefone</label>
+            <input name="phone" class="form-control" type="text" value="{{ user.phone|default:'' }}" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">CPF *</label>
+            <input name="cpf" class="form-control" type="text" value="{{ user.cpf }}" required />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Data de Nascimento *</label>
+            <input name="birth_date" class="form-control" type="date" value="{{ user.birth_date|date:'Y-m-d' }}" required />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Gênero</label>
+            <select name="gender" class="form-select">
+              <option value="">Selecione...</option>
+              <option value="M" {% if user.gender == 'M' %}selected{% endif %}>Masculino</option>
+              <option value="F" {% if user.gender == 'F' %}selected{% endif %}>Feminino</option>
+              <option value="O" {% if user.gender == 'O' %}selected{% endif %}>Outro</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-select">
+              <option value="A" {% if user.status == 'A' %}selected{% endif %}>Ativo</option>
+              <option value="I" {% if user.status == 'I' %}selected{% endif %}>Inativo</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Endereço -->
+        <h5 class="mt-4 mb-3 text-warning">📍 Endereço</h5>
+        <div class="row mb-3">
+          <div class="col-md-8">
+            <label class="form-label">Rua</label>
+            <input name="street" class="form-control" type="text" value="{{ user.street|default:'' }}" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">CEP</label>
+            <input name="zipcode" class="form-control" type="text" value="{{ user.zipcode|default:'' }}" />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-8">
+            <label class="form-label">Cidade</label>
+            <input name="city" class="form-control" type="text" value="{{ user.city|default:'' }}" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Estado</label>
+            <select name="state" class="form-select">
+              <option value="">UF</option>
+              <option value="AC" {% if user.state == 'AC' %}selected{% endif %}>AC</option>
+              <option value="AL" {% if user.state == 'AL' %}selected{% endif %}>AL</option>
+              <option value="AP" {% if user.state == 'AP' %}selected{% endif %}>AP</option>
+              <option value="AM" {% if user.state == 'AM' %}selected{% endif %}>AM</option>
+              <option value="BA" {% if user.state == 'BA' %}selected{% endif %}>BA</option>
+              <option value="CE" {% if user.state == 'CE' %}selected{% endif %}>CE</option>
+              <option value="DF" {% if user.state == 'DF' %}selected{% endif %}>DF</option>
+              <option value="ES" {% if user.state == 'ES' %}selected{% endif %}>ES</option>
+              <option value="GO" {% if user.state == 'GO' %}selected{% endif %}>GO</option>
+              <option value="MA" {% if user.state == 'MA' %}selected{% endif %}>MA</option>
+              <option value="MT" {% if user.state == 'MT' %}selected{% endif %}>MT</option>
+              <option value="MS" {% if user.state == 'MS' %}selected{% endif %}>MS</option>
+              <option value="MG" {% if user.state == 'MG' %}selected{% endif %}>MG</option>
+              <option value="PA" {% if user.state == 'PA' %}selected{% endif %}>PA</option>
+              <option value="PB" {% if user.state == 'PB' %}selected{% endif %}>PB</option>
+              <option value="PR" {% if user.state == 'PR' %}selected{% endif %}>PR</option>
+              <option value="PE" {% if user.state == 'PE' %}selected{% endif %}>PE</option>
+              <option value="PI" {% if user.state == 'PI' %}selected{% endif %}>PI</option>
+              <option value="RJ" {% if user.state == 'RJ' %}selected{% endif %}>RJ</option>
+              <option value="RN" {% if user.state == 'RN' %}selected{% endif %}>RN</option>
+              <option value="RS" {% if user.state == 'RS' %}selected{% endif %}>RS</option>
+              <option value="RO" {% if user.state == 'RO' %}selected{% endif %}>RO</option>
+              <option value="RR" {% if user.state == 'RR' %}selected{% endif %}>RR</option>
+              <option value="SC" {% if user.state == 'SC' %}selected{% endif %}>SC</option>
+              <option value="SP" {% if user.state == 'SP' %}selected{% endif %}>SP</option>
+              <option value="SE" {% if user.state == 'SE' %}selected{% endif %}>SE</option>
+              <option value="TO" {% if user.state == 'TO' %}selected{% endif %}>TO</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Foto de Perfil Atual -->
+        <div class="mb-3">
+          {% if user.profile_photo %}
+            <p class="form-label">Foto Atual:</p>
+            <img src="{{ user.profile_photo.url }}" alt="Foto" class="rounded" width="100" height="100">
+          {% endif %}
+        </div>
+
+        <!-- Nova Foto de Perfil -->
+        <div class="mb-4">
+          <label class="form-label">📸 Alterar Foto de Perfil</label>
+          <input name="profile_photo" class="form-control" type="file" accept="image/*" />
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-warning btn-lg px-5 me-2">
+            💾 Salvar Alterações
+          </button>
+          <a href="{% url 'users_list' %}" class="btn btn-secondary btn-lg px-5">
+            ❌ Cancelar
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
