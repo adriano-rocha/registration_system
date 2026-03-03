@@ -3,5 +3,6 @@ from app_users_reg import views
 
 urlpatterns = [
     # rota, view responsáel, nome de referência
-    path('', views.home,name='home')
+    path('', views.home,name='home'),
+    path('users/',views.users,name='users_list')
 ]
