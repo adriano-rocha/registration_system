@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import User
 
 def home(request):
@@ -6,15 +6,25 @@ def home(request):
 
 def users(request):
     # Salvar os dados da tela para o banco de dados.
-    new_user = User()
-    new_user.name = request.POST.get('name')
-    new_user.age = request.POST.get('age')
-    new_user.save()
+     if request.method == 'POST':
+        name = request.POST.get('name')
+        age = request.POST.get('age')        
+    # Verifica se campos não estão vazios    
+        if name and age:
+            new_user = User()
+            new_user.name = name
+            new_user.age = age
+            new_user.save()
     # Exibir todos os usuários já cadastrados em uma nova página
-    users = {
+     users = {
         'users': User.objects.all()
     }
     # Retornar os dados para a página de listagem de usuários
-    return render(request,'users/users.html',users)
+     return render(request,'users/users.html',users)
+
+def delete_user(request, user_id):
+        user = User.objects.get(user_id=user_id)
+        user.delete()
+        return redirect('users_list')
     
    
